@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "deploy": "bash scripts/deploy-ci.sh",
+    "deploy": "bash -e scripts/deploy-ci.sh",
     "test": "npx tslint src/*.ts"
   },
   "keywords": [],
