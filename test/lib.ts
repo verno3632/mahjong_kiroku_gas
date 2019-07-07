@@ -1,6 +1,6 @@
 import { assert } from "chai";
 import { describe, it } from "mocha";
-import { dateString, getWinner, UserResult } from "../src/lib";
+import { dateString, getLooser, getWinner, UserResult } from "../src/lib";
 
 describe("getWinner", () => {
     it("1位を出す", () => {
@@ -12,6 +12,19 @@ describe("getWinner", () => {
             new UserResult("looser3", 0),
         ];
         assert.equal(getWinner(userResults), winner);
+    });
+});
+
+describe("getLooser", () => {
+    it("4位を出す", () => {
+        const looser = new UserResult("looser", -30);
+        const userResults = [
+            new UserResult("winner1", 30),
+            looser,
+            new UserResult("winner2", 10),
+            new UserResult("winner3", -10),
+        ];
+        assert.equal(getLooser(userResults), looser);
     });
 });
 

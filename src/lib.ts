@@ -16,6 +16,12 @@ export function getWinner(userResults: UserResult[]) {
   });
 }
 
+export function getLooser(userResults: UserResult[]) {
+  return userResults.reduce((a, b) => {
+    return a.score < b.score ? a : b;
+  });
+}
+
 export function dateString(date: Date) {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
