@@ -84,11 +84,21 @@
 // const t = new Test();
 // console.log(t.name); // 'test'
 
-function doGet() {
-  const members = getMembers().sort();
+const targetSheet = "season4";
+const userRowNum = 1;
+const userStartColumnNum = 4;
+// hogehoge
 
-  const output = ContentService.createTextOutput();
-  output.setMimeType(ContentService.MimeType.JSON);
-  output.setContent(JSON.stringify(members));
-  return output;
+function getMembers() {
+  const activeSpreadSheet = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = activeSpreadSheet.getSheetByName(targetSheet);
+  const lastColumn = sheet.getLastColumn();
+
+  const nameRange = sheet.getRange(userRowNum, userStartColumnNum, userRowNum, lastColumn);
+  const array = [];
+  for (let index = userStartColumnNum; index < lastColumn; index++) {
+    array.push(sheet.getRange(userRowNum, index).getValue());
+  }
+
+  return array;
 }
