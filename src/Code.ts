@@ -87,6 +87,7 @@
 const targetSheet = "season4";
 const userRowNum = 1;
 const userStartColumnNum = 4;
+// hogehoge
 
 function getMembers() {
   const activeSpreadSheet = SpreadsheetApp.getActiveSpreadsheet();
