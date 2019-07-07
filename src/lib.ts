@@ -15,3 +15,13 @@ export function getWinner(userResults: UserResult[]) {
     return a.score > b.score ? a : b;
   });
 }
+
+export function dateString(date: Date) {
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const hour = date.getHours();
+  const minute = date.getMinutes();
+
+  return year + "/" + month + "/" + day + " " + hour + ":" + minute;
+}

@@ -1,3 +1,5 @@
+import { getWinner, dateString } from "./lib";
+
 // // 型定義
 // const isDone: boolean = false;
 // const height: number = 6;
@@ -84,41 +86,8 @@
 // const t = new Test();
 // console.log(t.name); // 'test'
 
-function doGet() {
-  const members = getMembers().sort();
-
-  const output = ContentService.createTextOutput();
-  output.setMimeType(ContentService.MimeType.JSON);
-  output.setContent(JSON.stringify(members));
-  return output;
-}
-
-function dateString() {
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const hour = date.getHours();
-  const minute = date.getMinutes();
-
-  return year + "/" + month + "/" + day + " " + hour + ":" + minute;
-}
-
-const dateCellNum = 1;
-const winnerCellNum = 2;
-const looserCellNum = 3;
 const userKey = "user";
 const valueKey = "value";
-
-function getUserColumnNumMap(){
-  const lastColumn = sheet.getLastColumn();
-  const userNumMap = {};
-  for(let i = userStartColumnNum; i <= lastColumn; i++) {
-    const value = sheet.getRange(userRowNum, i).getValue();
-    userNumMap[value] = i;
-  }
-  return userNumMap;
-}
 
 export function doPost(e) {
   const userColumnNumMap = getUserColumnNumMap();
@@ -127,7 +96,7 @@ export function doPost(e) {
 
   const targetRow = sheet.getLastRow() + 1;
 
-  const date = dateString();
+  const date = dateString(new Date());
   const dateCell = sheet.getRange(targetRow, dateCellNum);
   dateCell.setValue(date);
 

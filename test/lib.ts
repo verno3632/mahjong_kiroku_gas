@@ -1,6 +1,6 @@
 import { assert } from "chai";
 import { describe, it } from "mocha";
-import { getWinner, UserResult } from "../src/lib";
+import { dateString, getWinner, UserResult } from "../src/lib";
 
 describe("getWinner", () => {
     it("1位を出す", () => {
@@ -12,5 +12,12 @@ describe("getWinner", () => {
             new UserResult("looser3", 0),
         ];
         assert.equal(getWinner(userResults), winner);
+    });
+});
+
+describe("dateString", () => {
+    it("値を返す", () => {
+        const date = new Date("2019-06-30 09:59");
+        assert.equal(dateString(date), "2019/6/30 9:59");
     });
 });
