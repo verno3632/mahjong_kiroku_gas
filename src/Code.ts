@@ -92,3 +92,54 @@ function doGet() {
   output.setContent(JSON.stringify(members));
   return output;
 }
+
+function dateString() {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const hour = date.getHours();
+  const minute = date.getMinutes();
+
+  return year + "/" + month + "/" + day + " " + hour + ":" + minute;
+}
+
+const dateCellNum = 1;
+const winnerCellNum = 2;
+const looserCellNum = 3;
+const userKey = "user";
+const valueKey = "value";
+
+function getUserColumnNumMap(){
+  const lastColumn = sheet.getLastColumn();
+  const userNumMap = {};
+  for(let i = userStartColumnNum; i <= lastColumn; i++) {
+    const value = sheet.getRange(userRowNum, i).getValue();
+    userNumMap[value] = i;
+  }
+  return userNumMap;
+}
+
+export function doPost(e) {
+  const userColumnNumMap = getUserColumnNumMap();
+
+  const data = JSON.parse(e.postData.contents);
+
+  const targetRow = sheet.getLastRow() + 1;
+
+  const date = dateString();
+  const dateCell = sheet.getRange(targetRow, dateCellNum);
+  dateCell.setValue(date);
+
+  const winnerCell = sheet.getRange(targetRow, winnerCellNum);
+  winnerCell.setValue("=INDEX(D$1:$1, MATCH(MAX(D" + targetRow + ":" + targetRow+"), D"+targetRow+":"+targetRow+", 0))");
+
+  const looserCell = sheet.getRange(targetRow, looserCellNum);
+  looserCell.setValue("=INDEX(D$1:$1, MATCH(MIN(D"+targetRow+":"+targetRow+"), D"+targetRow+":"+targetRow+", 0))");
+
+  for (const datum of data) {
+    const name = datum[userKey];
+    const cell = sheet.getRange(targetRow, userColumnNumMap[name]);
+    cell.setValue(datum[valueKey]);
+  }
+}
