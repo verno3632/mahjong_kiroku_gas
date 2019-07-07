@@ -1,4 +1,4 @@
-import { getWinner, dateString } from "./lib";
+import { dateString, getLooser, getWinner } from "./lib";
 
 // // 型定義
 // const isDone: boolean = false;
@@ -86,9 +86,6 @@ import { getWinner, dateString } from "./lib";
 // const t = new Test();
 // console.log(t.name); // 'test'
 
-const userKey = "user";
-const valueKey = "value";
-
 export function doPost(e) {
   const userColumnNumMap = getUserColumnNumMap();
 
@@ -101,10 +98,10 @@ export function doPost(e) {
   dateCell.setValue(date);
 
   const winnerCell = sheet.getRange(targetRow, winnerCellNum);
-  winnerCell.setValue("=INDEX(D$1:$1, MATCH(MAX(D" + targetRow + ":" + targetRow+"), D"+targetRow+":"+targetRow+", 0))");
+  winnerCell.setValue(getWinner(data));
 
   const looserCell = sheet.getRange(targetRow, looserCellNum);
-  looserCell.setValue("=INDEX(D$1:$1, MATCH(MIN(D"+targetRow+":"+targetRow+"), D"+targetRow+":"+targetRow+", 0))");
+  looserCell.setValue(getLooser(data));
 
   for (const datum of data) {
     const name = datum[userKey];

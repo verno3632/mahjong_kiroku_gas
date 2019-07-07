@@ -10,6 +10,11 @@ export class UserResult {
   }
 }
 
+export function userResultFromJson(json: string){
+  const data = JSON.parse(json);
+  return new UserResult(data.user, Number.parseInt(data.value, 10));
+}
+
 export function getWinner(userResults: UserResult[]) {
   return userResults.reduce((a, b) => {
     return a.score > b.score ? a : b;
