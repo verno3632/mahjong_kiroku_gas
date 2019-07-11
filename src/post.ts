@@ -1,4 +1,4 @@
-import { dateString, getLooser, getWinner, userResultsFromJson } from "./lib";
+import { writeResult } from "./core";
 
 // // 型定義
 // const isDone: boolean = false;
@@ -87,25 +87,5 @@ import { dateString, getLooser, getWinner, userResultsFromJson } from "./lib";
 // console.log(t.name); // 'test'
 
 export function doPost(e) {
-  const userColumnNumMap = getUserColumnNumMap();
-
-  const userResults = userResultsFromJson(e.postData.contents);
-
-  const targetRow = sheet.getLastRow() + 1;
-
-  const date = dateString(new Date());
-  const dateCell = sheet.getRange(targetRow, DATE_CELL_NUM);
-  dateCell.setValue(date);
-
-  const winnerCell = sheet.getRange(targetRow, WINNER_CELL_NUM);
-  winnerCell.setValue(getWinner(userResults));
-
-  const looserCell = sheet.getRange(targetRow, LOOSER_CELL_NUM);
-  looserCell.setValue(getLooser(userResults));
-
-  for (const userResult of userResults) {
-    const name = userResult.name;
-    const cell = sheet.getRange(targetRow, userColumnNumMap[name]);
-    cell.setValue(userResult.score);
-  }
+  writeResult(e.postData.contents)
 }

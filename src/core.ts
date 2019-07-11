@@ -1,6 +1,7 @@
 //
 // SpreadSheetを使っていてテストできない
 //
+import { dateString, getLooser, getWinner, userResultsFromJson } from "./lib";
 
 const TARGET_SHEET_NAME = "season4";
 const USER_ROW_NUM = 1;
@@ -29,4 +30,28 @@ function getUserColumnNumMap(){
     userNumMap[value] = i;
   }
   return userNumMap;
+}
+
+export function writeResult(json: string){
+  const userColumnNumMap = getUserColumnNumMap();
+
+  const userResults = userResultsFromJson(json);
+
+  const targetRow = sheet.getLastRow() + 1;
+
+  const date = dateString(new Date());
+  const dateCell = sheet.getRange(targetRow, DATE_CELL_NUM);
+  dateCell.setValue(date);
+
+  const winnerCell = sheet.getRange(targetRow, WINNER_CELL_NUM);
+  winnerCell.setValue(getWinner(userResults));
+
+  const looserCell = sheet.getRange(targetRow, LOOSER_CELL_NUM);
+  looserCell.setValue(getLooser(userResults));
+
+  for (const userResult of userResults) {
+    const name = userResult.name;
+    const cell = sheet.getRange(targetRow, userColumnNumMap[name]);
+    cell.setValue(userResult.score);
+  }
 }
