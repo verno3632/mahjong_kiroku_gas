@@ -10,9 +10,11 @@ export class UserResult {
   }
 }
 
-export function userResultFromJson(json: string){
+export function userResultsFromJson(json: string){
   const data = JSON.parse(json);
-  return new UserResult(data.user, Number.parseInt(data.value, 10));
+  return data.map( (d: { user: string; value: string; }) => {
+    return new UserResult(d.user, Number.parseInt(d.value, 10));
+  });
 }
 
 export function getWinner(userResults: UserResult[]) {

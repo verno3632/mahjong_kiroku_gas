@@ -1,6 +1,6 @@
 import { assert } from "chai";
 import { describe, it } from "mocha";
-import { dateString, getLooser, getWinner, UserResult, userResultFromJson } from "../src/lib";
+import { dateString, getLooser, getWinner, UserResult, userResultsFromJson } from "../src/lib";
 
 describe("getWinner", () => {
     it("1位を出す", () => {
@@ -37,9 +37,11 @@ describe("dateString", () => {
 
 describe("UserResult", () => {
     it("Jsonから生成する", () => {
-        const json = '{"user": "user1", "value": "30"}';
-        const userResult = userResultFromJson(json);
-        assert.equal(userResult.name, "user1");
-        assert.equal(userResult.score, 30);
+        const json = '[{"user": "user1", "value": "30"}, {"user": "user2", "value": "-30"} ]';
+        const userResults = userResultsFromJson(json);
+        assert.equal(userResults[0].name, "user1");
+        assert.equal(userResults[0].score, 30);
+        assert.equal(userResults[1].name, "user2");
+        assert.equal(userResults[1].score, -30);
     });
 });
