@@ -39,6 +39,7 @@ export function writeLog(log: string){
 export function writeResult(submission: any){
   const userColumnNumMap = getUserColumnNumMap();
 
+  writeLog(submission);
   const userResults = userResultsFromJson(submission);
 
   const targetRow = sheet.getLastRow() + 1;

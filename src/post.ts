@@ -94,8 +94,7 @@ export function doPost(e) {
   } else if (data.trigger_id && data.trigger_id.length > 0) {
     openDialog(data.trigger_id[0], "xoxb-6646773781-668656856550-XpaREMYCtf8NLbcHWNtzsAjh");
   } else if (data.payload && data.payload.type === "dialog_submission") {
-    const sub = data.submission;
-    writeLog(sub);
+    const sub = JSON.parse(data.payload).submission;
     writeResult(sub);
   }
 }
