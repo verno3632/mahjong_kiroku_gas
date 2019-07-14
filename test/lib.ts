@@ -37,8 +37,17 @@ describe("dateString", () => {
 
 describe("UserResult", () => {
     it("Jsonから生成する", () => {
-        const json = '[{"user": "user1", "value": "30"}, {"user": "user2", "value": "-30"} ]';
-        const userResults = userResultsFromJson(json);
+        const submission = {
+            user1: "user1",
+            user2: "user2",
+            user3: "user3",
+            user4: "user4",
+            score1: "30",
+            score2: "-30",
+            score3: "-30",
+            score4: "30",
+        }
+        const userResults = userResultsFromJson(submission);
         assert.equal(userResults[0].name, "user1");
         assert.equal(userResults[0].score, 30);
         assert.equal(userResults[1].name, "user2");

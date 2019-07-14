@@ -36,10 +36,10 @@ export function writeLog(log: string){
   sheet.getRange(1, 1).setValue(log);
 }
 
-export function writeResult(json: string){
+export function writeResult(submission: any){
   const userColumnNumMap = getUserColumnNumMap();
 
-  const userResults = userResultsFromJson(json);
+  const userResults = userResultsFromJson(submission);
 
   const targetRow = sheet.getLastRow() + 1;
 
