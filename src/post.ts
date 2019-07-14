@@ -1,8 +1,8 @@
 import { getMembers, writeLog, writeResult } from "./core";
-import { userResultsFromJson } from "./lib";
+import { userResults, validateUsers, validateScores, validateTotalScore } from "./lib";
 
 function responseToChallengeRequest(challenge: string) {
-  const json = JSON.stringify({challenge: challenge});
+  const json = JSON.stringify({challenge});
   return ContentService.createTextOutput(json).setMimeType(ContentService.MimeType.JSON);
 }
 
@@ -95,11 +95,20 @@ export function doPost(e) {
   } else if (data.payload) {
     const sub = JSON.parse(data.payload).submission;
     try {
-      writeResult(sub);
-      return ContentService.createTextOutput();
+      const errors = [];
+      errors.push(validateUsers(sub));
+      errors.push(validateScores(sub));
+      const results = userResults(sub);
+      errors.push(validateTotalScore(results));
+
+      if(errors.length === 0){
+        writeResult(results);
+        return ContentService.createTextOutput();
+      }else{
+        return ContentService.createTextOutput(JSON.stringify({errors})).setMimeType(ContentService.MimeType.JSON);
+      }
     } catch (error) {
-      writeLog(error);
       return ContentService.createTextOutput(error).setMimeType(ContentService.MimeType.JSON);
-    };
+    }
   }
 }
