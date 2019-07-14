@@ -98,6 +98,7 @@ function createDialog(trigger_id: string, token: string){
     };
   });
   return {
+    token,
     trigger_id,
     dialog: JSON.stringify({
       callback_id: "dialog_send",
@@ -163,7 +164,6 @@ function openDialog(trigger_id: string, token: string){
   const slackUrl = "https://slack.com/api/dialog.open";
   const response = UrlFetchApp.fetch(slackUrl, {
     contentType: "application/x-www-form-urlencoded",
-    headers: {"Authorization": "Bearer xoxb-6646773781-668656856550-Wr9SEq1bo3ZBNnTrjVoe4M1x"},
     method: "post",
     payload: createDialog(trigger_id, token),
   });
@@ -177,7 +177,7 @@ export function doPost(e) {
   if (data.challenge && data.challenge.length > 0) {
     responseToChallengeRequest(data.challenge);
   } else if (data.trigger_id && data.trigger_id.length > 0) {
-    openDialog(data.trigger_id[0], "xoxb-6646773781-668656856550-Wr9SEq1bo3ZBNnTrjVoe4M1x");
+    openDialog(data.trigger_id[0], "xoxb-6646773781-668656856550-KEaOdk8uFBjX3FD2mbCSTC3Q");
   } else {
     const jsonStr = e.postData.getDataAsString();
     writeResult(jsonStr);
