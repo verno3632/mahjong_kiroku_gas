@@ -177,7 +177,7 @@ export function doPost(e) {
   if (data.challenge && data.challenge.length > 0) {
     responseToChallengeRequest(data.challenge);
   } else if (data.trigger_id && data.trigger_id.length > 0) {
-    openDialog(data.trigger_id[0], "xoxp-6646773781-6646773813-668394005303-58d24394cef31f7716ef6de59aafb1f4");
+    openDialog(data.trigger_id[0], "xoxp-6646773781-6646773813-695881687911-41051ff53ea05c91f1fe1629021e2f92");
   } else {
     const jsonStr = e.postData.getDataAsString();
     writeResult(jsonStr);
