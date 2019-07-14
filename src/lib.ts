@@ -12,10 +12,10 @@ export class UserResult {
 
 export function userResultsFromJson(submission: {user1: string, user2: string, user3: string, user4: string, score1: string, score2: string, score3: string, score4: string}){
   return [
-    new UserResult(submission.user1, Number.parseInt(submission.score1, 10)),
-    new UserResult(submission.user2, Number.parseInt(submission.score2, 10)),
-    new UserResult(submission.user3, Number.parseInt(submission.score3, 10)),
-    new UserResult(submission.user4, Number.parseInt(submission.score4, 10)),
+    new UserResult(submission.user1, parseInt(submission.score1, 10)),
+    new UserResult(submission.user2, parseInt(submission.score2, 10)),
+    new UserResult(submission.user3, parseInt(submission.score3, 10)),
+    new UserResult(submission.user4, parseInt(submission.score4, 10)),
   ];
 }
 

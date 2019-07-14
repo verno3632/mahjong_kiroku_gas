@@ -49,10 +49,10 @@ export function writeResult(submission: any){
   dateCell.setValue(date);
 
   const winnerCell = sheet.getRange(targetRow, WINNER_CELL_NUM);
-  winnerCell.setValue(getWinner(userResults));
+  winnerCell.setValue(getWinner(userResults).name);
 
   const looserCell = sheet.getRange(targetRow, LOOSER_CELL_NUM);
-  looserCell.setValue(getLooser(userResults));
+  looserCell.setValue(getLooser(userResults).name);
 
   for (const userResult of userResults) {
     const name = userResult.name;

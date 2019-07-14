@@ -91,11 +91,12 @@ export function doPost(e) {
   if (data.challenge && data.challenge.length > 0) {
     responseToChallengeRequest(data.challenge);
   } else if (data.trigger_id && data.trigger_id.length > 0) {
-    openDialog(data.trigger_id[0], "xoxb-6646773781-668656856550-XpaREMYCtf8NLbcHWNtzsAjh");
+    openDialog(data.trigger_id[0], "xoxb-6646773781-668656856550-snDCq1eByb2GRqtJVQOGhgGp");
   } else if (data.payload) {
     const sub = JSON.parse(data.payload).submission;
     try {
-      writeResult(sub)
+      writeResult(sub);
+      return ContentService.createTextOutput();
     } catch (error) {
       writeLog(error);
       return ContentService.createTextOutput(error).setMimeType(ContentService.MimeType.JSON);
