@@ -83,7 +83,6 @@ function openDialog(trigger_id: string, token: string){
     method: "post",
     payload: createDialog(trigger_id, token),
   });
-  writeLog(trigger_id);
   return ContentService.createTextOutput(JSON.stringify(response)).setMimeType(ContentService.MimeType.JSON);
 }
 
@@ -95,6 +94,11 @@ export function doPost(e) {
     openDialog(data.trigger_id[0], "xoxb-6646773781-668656856550-XpaREMYCtf8NLbcHWNtzsAjh");
   } else if (data.payload && data.payload.type === "dialog_submission") {
     const sub = JSON.parse(data.payload).submission;
-    writeResult(sub);
+    try {
+      writeResult(sub)
+    } catch (error) {
+      writeLog(error);
+      return ContentService.createTextOutput(error).setMimeType(ContentService.MimeType.JSON);
+    };
   }
 }
