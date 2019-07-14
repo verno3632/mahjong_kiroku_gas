@@ -12,9 +12,9 @@ const LOOSER_CELL_NUM = 3;
 const activeSpreadSheet = SpreadsheetApp.getActiveSpreadsheet();
 const sheet = activeSpreadSheet.getSheetByName(TARGET_SHEET_NAME);
 
-function getMembers() {
+export function getMembers(): string[] {
   const lastColumn = sheet.getLastColumn();
-  const array = [];
+  const array: string[] = [];
   for (let index = USER_COLUMN_START_NUM; index < lastColumn; index++) {
     array.push(sheet.getRange(USER_ROW_NUM, index).getValue());
   }
@@ -30,6 +30,10 @@ function getUserColumnNumMap(){
     userNumMap[value] = i;
   }
   return userNumMap;
+}
+
+export function writeLog(log: string){
+  sheet.getRange(1, 1).setValue(log);
 }
 
 export function writeResult(json: string){
